@@ -51,25 +51,27 @@ Ensure:
 
 If you don’t have macro-aligned data, create synthetic macro time series.
 
-🌍 STEP 2 — Create or Load Macro Data
+🌍 STEP 2 — Load Real Macro Data from World Bank
 Copilot instruction:
-Create a synthetic macroeconomic dataset with monthly dates matching the borrower dataset.
+Fetch macroeconomic time series from the World Bank API (no synthetic macro generation).
 
-Include 3 macro variables:
-- GDP growth (random normal around 2%)
-- Unemployment rate (random normal around 6%)
-- Interest rate (random normal around 4%)
+Use these indicators:
+- GDP growth (annual %) → `NY.GDP.MKTP.KD.ZG`
+- Unemployment, total (% of labor force) → `SL.UEM.TOTL.ZS`
+- Lending interest rate (%) → `FR.INR.LEND`
 
-Add some regime-like structure:
-- Create 3 periods manually:
-    Period 1: strong growth, low unemployment
-    Period 2: moderate
-    Period 3: low growth, high unemployment
+Use API endpoint pattern:
+`https://api.worldbank.org/v2/country/{country_code}/indicator/{indicator_code}?format=json&per_page=20000`
+
+Steps:
+1. Download each indicator as JSON
+2. Parse year + value pairs into DataFrames
+3. Convert dates to year-end datetime (`YYYY-12-31`)
+4. Merge all indicators on date (inner join)
+5. Align date range to borrower dataset before HMM fitting
 
 Store macro data in DataFrame:
 date, gdp_growth, unemployment, interest_rate
-
-(You can later replace synthetic with real data.)
 
 🧠 STEP 3 — Fit Hidden Markov Model
 Copilot instruction:
