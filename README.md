@@ -1,12 +1,6 @@
 # Regime-Aware-Credit-PD-Pipeline
 
-- Instructions to co-pilot
 
-Good.
-We’re building a lean, working prototype in 2–3 days.
-No fluff. No overengineering.
-Just: macro → HMM → regime → PD model → calibration → compare.
-Below is copy-paste ready Copilot instructions, step-by-step.
 
 🚀 PROJECT: Regime-Aware Credit PD Prototype
 We will:
